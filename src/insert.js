@@ -5,10 +5,15 @@ const port = 27017
 const url = `mongodb://${ip}:${port}`
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
-async function insertOne() {
+async function getCollection(collName, dbName = 'mydb',) {
   await client.connect()
-  const db = client.db('mydb')
-  const collection = db.collection('students')
+  const db = client.db(dbName)
+  const collection = db.collection(collName)
+  return collection
+}
+
+async function insertOne() {
+  const collection = await getCollection('students')
 
   const doc = { name: 'bob', age: 122, weight: 90 }
 
@@ -30,9 +35,7 @@ async function insertOne() {
 // [ { age: 12, weight: 90, _id: 5f4259c9672769493f3702f0 } ]
 
 async function insertMany() {
-  await client.connect()
-  const db = client.db('mydb')
-  const collection = db.collection('students')
+  const collection = await getCollection('students')
 
   const docs = [
     {

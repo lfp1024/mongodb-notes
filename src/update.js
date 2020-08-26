@@ -5,10 +5,15 @@ const port = 27017
 const url = `mongodb://${ip}:${port}`
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
-async function updateOne() {
+async function getCollection(collName, dbName = 'mydb',) {
   await client.connect()
-  const db = client.db('mydb')
-  const collection = db.collection('students')
+  const db = client.db(dbName)
+  const collection = db.collection(collName)
+  return collection
+}
+
+async function updateOne() {
+  const collection = await getCollection('students')
 
   const res = await collection.updateOne({ age: { $lt: 15 } }, { $set: { age: 13 } })
 
@@ -24,10 +29,7 @@ async function updateOne() {
 // 1
 
 async function updateMany() {
-  await client.connect()
-  const db = client.db('mydb')
-  const collection = db.collection('students')
-
+  const collection = await getCollection('students')
   // const res = await collection.updateMany({ age: { $lt: 20 } }, { $inc: { weight: 10 } })
 
   // const res = await collection.updateMany(
@@ -56,9 +58,7 @@ async function updateMany() {
 // 3
 
 async function replaceOne() {
-  await client.connect()
-  const db = client.db('mydb')
-  const collection = db.collection('students')
+  const collection = await getCollection('students')
 
   const doc = {
     name: 'jack', age: 33, weight: 100, score: [14, 12, 13]
