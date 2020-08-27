@@ -19,13 +19,13 @@ async function getCollection(collName, dbName = 'mydb',) {
 async function find() {
   const collection = await getCollection('students')
 
-  const res = collection.find()
+  const res = collection.find().sort('age', 1)
   // console.log(res)
   console.log(await res.toArray())
   console.log(await res.count())
 }
 
-// find().finally(() => { client.close() }).catch((e) => { console.log(e) })
+find().finally(() => { client.close() }).catch((e) => { console.log(e) })
 
 async function findOne() {
   const collection = await getCollection('students')
@@ -81,4 +81,4 @@ async function findOneAndDelete() {
   console.log(res.value)
 }
 
-findOneAndDelete().finally(() => { client.close() }).catch((e) => { console.log(e) })
+// findOneAndDelete().finally(() => { client.close() }).catch((e) => { console.log(e) })
