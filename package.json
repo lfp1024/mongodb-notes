@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/lfp1024/mongodb-notes#readme",
   "dependencies": {
-    "mongodb": "^3.6.0"
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.10.1"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
